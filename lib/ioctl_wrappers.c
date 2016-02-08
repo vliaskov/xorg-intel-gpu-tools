@@ -1389,8 +1389,10 @@ void gem_require_ring(int fd, int ring_id)
 
 	/* silly ABI, the kernel thinks everyone who has BSD also has BSD2 */
 	if ((ring_id & ~(3<<13)) == I915_EXEC_BSD) {
-		if (ring_id & (3 << 13))
+		if (ring_id & (2 << 13))
 			igt_require(gem_has_bsd2(fd));
+		if (ring_id & (1 << 13))
+			igt_require(gem_has_bsd(fd))
 	}
 }
 
