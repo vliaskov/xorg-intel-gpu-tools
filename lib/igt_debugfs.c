@@ -137,9 +137,9 @@ static bool __igt_debugfs_init(igt_debugfs_t *debugfs)
 	int n;
 
 	strcpy(debugfs->root, igt_debugfs_mount());
-	for (n = 0; n < 16; n++) {
+	for (n = 2; n >= 0; n--) {
 		int len = sprintf(debugfs->dri_path, "%s/dri/%d", debugfs->root, n);
-		sprintf(debugfs->dri_path + len, "/i915_error_state");
+		sprintf(debugfs->dri_path + len, "/state");
 		if (stat(debugfs->dri_path, &st) == 0) {
 			debugfs->dri_path[len] = '\0';
 			return true;
@@ -206,10 +206,12 @@ FILE *igt_debugfs_fopen(const char *filename,
 	char buf[1024];
 
 	igt_debugfs_t *debugfs = __igt_debugfs_singleton();
+	fprintf(stderr, "%s %p/%s\n", __func__, debugfs, filename);
 
 	if (!debugfs)
 		return NULL;
 
+	fprintf(stderr, "%s %s/%s\n", __func__, debugfs->dri_path, filename);
 	sprintf(buf, "%s/%s", debugfs->dri_path, filename);
 	return fopen(buf, mode);
 }
@@ -451,7 +453,7 @@ void igt_require_pipe_crc(void)
 
 	ctl = igt_debugfs_fopen("crtc-0/crc/control", "r+");
 	if (!ctl) {
-		ctl = igt_debugfs_fopen("i915_display_crc_ctl", "r+");
+		ctl = igt_debugfs_fopen("vkms_display_crc_ctl", "r+");
 		igt_require_f(ctl,
 			      "No display_crc_ctl found, kernel too old\n");
 		written = fwrite(cmd, 1, strlen(cmd), ctl);

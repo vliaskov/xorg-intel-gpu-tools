@@ -247,7 +247,7 @@ int __drm_open_driver(int chipset)
 	if (chipset & DRIVER_VGEM)
 		modprobe("vgem");
 
-	for (int i = 0; i < 16; i++) {
+	for (int i = 2; i >= 0; i--) {
 		char name[80];
 		int fd;
 

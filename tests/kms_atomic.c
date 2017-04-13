@@ -628,12 +628,16 @@ static void fill_obj_props(int fd, uint32_t id, int type, int num_props,
 	drmModeObjectPropertiesPtr props;
 	int i, j;
 
+	fprintf(stderr, "%s fd=%d id=%d before getresources\n", __func__, fd, id);
 	props = drmModeObjectGetProperties(fd, id, type);
 	igt_assert(props);
+	fprintf(stderr, "%s fd=%d id=%d after getresources\n", __func__, fd, id);
 
 	for (i = 0; i < props->count_props; i++) {
+		fprintf(stderr, "%s fd=%d id=%d propcount=%d\n", __func__, fd, id, i);
 		drmModePropertyPtr prop =
 			drmModeGetProperty(fd, props->props[i]);
+		fprintf(stderr, "%s fd=%d id=%d gotproperty propcount=%d\n", __func__, fd, id, i);
 
 		for (j = 0; j < num_props; j++) {
 			if (strcmp(prop->name, prop_names[j]) != 0)
@@ -655,12 +659,16 @@ static void fill_obj_prop_map(int fd, uint32_t id, int type, const char *name,
 	drmModeObjectPropertiesPtr props;
 	int i, j, k;
 
+	fprintf(stderr, "%s fd=%d id=%d before getresources\n", __func__, fd, id);
 	props = drmModeObjectGetProperties(fd, id, type);
 	igt_assert(props);
+	fprintf(stderr, "%s fd=%d id=%d after getresources\n", __func__, fd, id);
 
 	for (i = 0; i < props->count_props; i++) {
+		fprintf(stderr, "%s fd=%d id=%d propcount=%d\n", __func__, fd, id, i);
 		drmModePropertyPtr prop =
 			drmModeGetProperty(fd, props->props[i]);
+		fprintf(stderr, "%s fd=%d id=%d gotproperty propcount=%d\n", __func__, fd, id, i);
 
 		igt_assert(prop);
 
