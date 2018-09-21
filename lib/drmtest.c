@@ -234,7 +234,7 @@ static int open_device(const char *name, unsigned int chipset)
 			break;
 		}
 	}
-	if ((chipset & chip) == chip)
+	//if ((chipset & chip) == chip)
 		return fd;
 
 err:
@@ -291,7 +291,7 @@ static int __open_driver(const char *base, int offset, unsigned int chipset)
  */
 int __drm_open_driver(int chipset)
 {
-	return __open_driver("/dev/dri/card", 0, chipset);
+	return __open_driver("/dev/dri/card", 1, chipset);
 }
 
 static int __drm_open_driver_render(int chipset)

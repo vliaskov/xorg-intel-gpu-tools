@@ -1398,6 +1398,7 @@ void kmstest_unset_all_crtcs(int drm_fd, drmModeResPtr resources)
 	for (i = 0; i < resources->count_crtcs; i++) {
 		rc = drmModeSetCrtc(drm_fd, resources->crtcs[i], 0, 0, 0, NULL,
 				    0, NULL);
+		fprintf(stderr, "%s drmModeSetCrtc ret=%d\n", __func__, rc);
 		igt_assert(rc == 0);
 	}
 }
